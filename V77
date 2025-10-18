@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>คำนวณราคาเห็ดแดง</title>
+<title>โปรแกรมคำนวณราคาเห็ดแดง</title>
 <style>
 body {
     font-family: 'Arial', sans-serif;
@@ -48,7 +48,7 @@ label {
     margin-bottom: 10px;
     text-align: center;
 }
-input[type="tel"] {
+input[type="number"] {
     width: 90%;
     padding: 14px;
     font-size: 24px;
@@ -57,7 +57,7 @@ input[type="tel"] {
     outline: none;
     text-align: center;
 }
-input[type="tel"]:focus {
+input[type="number"]:focus {
     border-color: #C1272D;
     box-shadow: 0 0 10px rgba(193, 39, 45, 0.3);
 }
@@ -101,7 +101,7 @@ button:hover {
     .container { width: 90%; padding: 20px; }
     h1 { font-size: 32px; margin-bottom: 25px; }
     label { font-size: 22px; }
-    input[type="tel"] { font-size: 22px; }
+    input[type="number"] { font-size: 22px; }
     button { font-size: 24px; }
     .result { font-size: 24px; }
 }
@@ -110,18 +110,22 @@ button:hover {
 <body>
 <div class="container">
     <h1>โปรแกรมซื้อขายเห็ดแดง</h1>
+
     <div class="input-group" id="group-large">
         <label for="largeWeight">จี๋ใหญ่ (กิโลกรัม)</label>
-        <input type="tel" id="largeWeight" placeholder="กรอกน้ำหนัก" pattern="[0-9]*[.]?[0-9]*">
+        <input type="number" id="largeWeight" placeholder="กรอกน้ำหนัก" step="any" min="0">
     </div>
+
     <div class="input-group" id="group-small">
         <label for="smallWeight">จี๋เล็ก (กิโลกรัม)</label>
-        <input type="tel" id="smallWeight" placeholder="กรอกน้ำหนัก" pattern="[0-9]*[.]?[0-9]*">
+        <input type="number" id="smallWeight" placeholder="กรอกน้ำหนัก" step="any" min="0">
     </div>
+
     <div class="input-group" id="group-bloom">
         <label for="bloomWeight">เห็ดบาน (กิโลกรัม)</label>
-        <input type="tel" id="bloomWeight" placeholder="กรอกน้ำหนัก" pattern="[0-9]*[.]?[0-9]*">
+        <input type="number" id="bloomWeight" placeholder="กรอกน้ำหนัก" step="any" min="0">
     </div>
+
     <button type="button" id="calculateBtn">คำนวณราคา</button>
     <div class="result" id="total"></div>
 </div>
@@ -129,12 +133,7 @@ button:hover {
 <script>
 function calculateWeight(inputId) {
     const input = document.getElementById(inputId).value || '0';
-    try {
-        const value = Function('"use strict"; return (' + input + ')')();
-        return Math.max(parseFloat(value) || 0, 0);
-    } catch {
-        return 0;
-    }
+    return Math.max(parseFloat(input) || 0, 0);
 }
 
 document.getElementById('calculateBtn').addEventListener('click', function() {
